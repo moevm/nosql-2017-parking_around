@@ -2,8 +2,11 @@ package parking.domain;
 
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jt on 1/10/17.
@@ -16,6 +19,9 @@ public class Node {
     private String name;
     private double latitude;
     private double longitude;
+
+    @Relationship(type = "EXIST_ROADS_TO")
+    private List<Node> nodes = new ArrayList<Node>();
 
     public Long getId() {
         return id;
@@ -47,5 +53,13 @@ public class Node {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
     }
 }
