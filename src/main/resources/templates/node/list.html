@@ -24,6 +24,7 @@
                 <th>Name</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
+                <th>EXIST_ROADS_TO</th>
                 <th>List</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -33,6 +34,7 @@
                 <td th:text="${node.name}"></td>
                 <td th:text="${node.latitude}"></td>
                 <td th:text="${node.longitude}"></td>
+                <td th:text="${node.nodes}"></td>
                 <td><a th:href="${'/node/show/' + node.id}">View</a> </td>
                 <td><a th:href="${'/node/edit/' + node.id}">Edit</a> </td>
                 <td><a th:href="${'/node/delete/' + node.id}">Delete</a> </td>

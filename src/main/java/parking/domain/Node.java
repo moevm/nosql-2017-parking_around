@@ -20,7 +20,12 @@ public class Node {
     private double latitude;
     private double longitude;
 
-    @Relationship(type = "EXIST_ROADS_TO")
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
+    @Relationship(type = "EXIST_ROADS_TO", direction = Relationship.OUTGOING)
     private List<Node> nodes = new ArrayList<Node>();
 
     public Long getId() {
@@ -62,4 +67,5 @@ public class Node {
     public void setNodes(List<Node> nodes) {
         this.nodes = nodes;
     }
+
 }

@@ -1,6 +1,10 @@
 package parking.commands;
 
+import parking.domain.Node;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Stanislav on 13.11.2017.
@@ -10,6 +14,7 @@ public class NodeForm {
     private String name;
     private double latitude;
     private double longitude;
+    private String nodes;
 
     public Long getId() {
         return id;
@@ -41,5 +46,13 @@ public class NodeForm {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(String nodes) {
+        this.nodes = nodes;
     }
 }
