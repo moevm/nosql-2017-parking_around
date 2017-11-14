@@ -1,7 +1,9 @@
 package parking.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import parking.commands.NodeForm;
 import parking.converters.NodeFormToNode;
 import parking.converters.NodeToNodeForm;
@@ -52,9 +54,13 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
+    public void deleteRelationFromNodeToNode(Long idFrom, Long idTo){
+        nodeRepository.deleteRelationFromNodeToNode(idFrom, idTo);
+    }
+
+    @Override
     public Node saveOrUpdateNodeForm(NodeForm nodeForm) {
         Node savedNode = saveOrUpdate(nodeFormToNode.convert(nodeForm));
-
         System.out.println("Saved Node Id: " + savedNode.getId());
         return savedNode;
     }

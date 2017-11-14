@@ -10,6 +10,7 @@ import parking.repositories.NodeRepository;
 import parking.services.NodeService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Stanislav on 13.11.2017.
@@ -33,7 +34,6 @@ public class NodeFormToNode implements Converter<NodeForm, Node> {
         node.setName(nodeForm.getName());
         node.setLongitude(nodeForm.getLongitude());
         node.setLatitude(nodeForm.getLatitude());
-
         if(!nodeForm.getNodes().isEmpty()) {
             String[] ids = nodeForm.getNodes().split(",");
             ArrayList<Node> nodes = new ArrayList<Node>();
@@ -43,8 +43,7 @@ public class NodeFormToNode implements Converter<NodeForm, Node> {
             }
             node.setNodes(nodes);
         }
-        else
-            node.setNodes(null);
+
         return node;
     }
 }

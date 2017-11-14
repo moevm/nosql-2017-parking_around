@@ -13,6 +13,7 @@ import parking.domain.Node;
 import parking.services.NodeService;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 
 /**
  * Created by Stanislav on 13.11.2017.
@@ -66,13 +67,20 @@ public class NodeController {
 
     @RequestMapping(value = "/node", method = RequestMethod.POST)
     public String saveOrUpdateNode(@Valid NodeForm nodeForm, BindingResult bindingResult){
-
         if(bindingResult.hasErrors()){
             return "node/nodeform";
         }
-
+        Node nodeInDB = nodeService.getById(nodeForm.getId());
         Node savedNode = nodeService.saveOrUpdateNodeForm(nodeForm);
 
+        if(nodeInDB.getNodes().size() > savedNode.getNodes().size()){
+            Iterator<Node> iterator = nodeInDB.getNodes().iterator();
+            while(iterator.hasNext()){
+                Node buf = iterator.next();
+                if(!savedNode.getNodes().contains(buf))
+                    nodeService.deleteRelationFromNodeToNode(nodeInDB.getId(), buf.getId());
+            }
+        }
         return "redirect:/node/show/" + savedNode.getId();
     }
 

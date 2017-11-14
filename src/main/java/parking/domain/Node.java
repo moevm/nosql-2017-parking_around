@@ -3,6 +3,7 @@ package parking.domain;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.Index;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class Node {
 
     @GraphId
     private Long id;
+
+    @Index(unique=true)
     private String name;
     private double latitude;
     private double longitude;
