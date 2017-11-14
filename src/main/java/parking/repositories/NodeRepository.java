@@ -14,4 +14,9 @@ public interface NodeRepository extends GraphRepository<Node> {
 
     @Query("MATCH (n:Node)-[r:EXIST_ROADS_TO]->(n1:Node) WHERE ID(n)={idFrom} AND ID(n1)={idTo} DELETE r")
     void deleteRelationFromNodeToNode(@Param("idFrom")Long idFrom, @Param("idTo") Long idTo);
+
+    @Query("MATCH (p:Node), (p1:Node) " +
+            "WHERE ID(p) = {id}  AND ID(p1) = {id1} " +
+            "RETURN distance(point({ longitude: p.longitude, latitude: p.latitude, crs: 'WGS-84' }), point({ longitude: p1.longitude, latitude: p1.latitude, crs:'WGS-84' }))")
+    float distanceBetweenNodes(@Param("id") Long id, @Param("id1") Long id1);
 }

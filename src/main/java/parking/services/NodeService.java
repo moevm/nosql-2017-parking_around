@@ -21,5 +21,7 @@ public interface NodeService {
 
     void deleteRelationFromNodeToNode(Long idFrom, Long idTo);
 
+    float distanceBetweenNodes(Long id, Long id1);
+
     Node saveOrUpdateNodeForm(NodeForm nodeForm);
 }

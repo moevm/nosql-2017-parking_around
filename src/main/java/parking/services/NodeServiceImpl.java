@@ -59,6 +59,11 @@ public class NodeServiceImpl implements NodeService {
     }
 
     @Override
+    public float distanceBetweenNodes(Long id, Long id1){
+        return nodeRepository.distanceBetweenNodes(id, id1);
+    }
+
+    @Override
     public Node saveOrUpdateNodeForm(NodeForm nodeForm) {
         Node savedNode = saveOrUpdate(nodeFormToNode.convert(nodeForm));
         System.out.println("Saved Node Id: " + savedNode.getId());

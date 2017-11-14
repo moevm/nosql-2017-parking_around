@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <div th:if="${not #lists.isEmpty(nodes)}">
-        <h2>Product List</h2>
+        <h2>Node List</h2>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
@@ -28,6 +28,7 @@
                 <th>List</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                <th>Distance</th>
             </tr>
             <tr th:each="node : ${nodes}">
                 <td th:text="${node.id}"></td>
@@ -38,6 +39,7 @@
                 <td><a th:href="${'/node/show/' + node.id}">View</a> </td>
                 <td><a th:href="${'/node/edit/' + node.id}">Edit</a> </td>
                 <td><a th:href="${'/node/delete/' + node.id}">Delete</a> </td>
+                <td><a th:href="${'/node/distance/' + node.id}">Distance</a> </td>
             </tr>
         </table>
     </div>

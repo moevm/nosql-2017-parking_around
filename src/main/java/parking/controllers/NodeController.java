@@ -7,7 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import parking.commands.DistanceForm;
 import parking.commands.NodeForm;
+import parking.converters.NodeToDistanceForm;
 import parking.converters.NodeToNodeForm;
 import parking.domain.Node;
 import parking.services.NodeService;
@@ -22,6 +24,7 @@ import java.util.Iterator;
 public class NodeController {
     private NodeService nodeService;
     private NodeToNodeForm nodeToNodeForm;
+    private NodeToDistanceForm nodeToDistanceForm;
 
     @Autowired
     public void setNodeToNodeForm(NodeToNodeForm nodeToNodeForm){
@@ -31,6 +34,11 @@ public class NodeController {
     @Autowired
     public void setNodeService(NodeService nodeService) {
         this.nodeService = nodeService;
+    }
+
+    @Autowired
+    public void setNodeToDistanceForm(NodeToDistanceForm nodeToDistanceForm) {
+        this.nodeToDistanceForm = nodeToDistanceForm;
     }
 
     @RequestMapping("/")
@@ -70,15 +78,17 @@ public class NodeController {
         if(bindingResult.hasErrors()){
             return "node/nodeform";
         }
-        Node nodeInDB = nodeService.getById(nodeForm.getId());
-        Node savedNode = nodeService.saveOrUpdateNodeForm(nodeForm);
 
-        if(nodeInDB.getNodes().size() > savedNode.getNodes().size()){
-            Iterator<Node> iterator = nodeInDB.getNodes().iterator();
-            while(iterator.hasNext()){
-                Node buf = iterator.next();
-                if(!savedNode.getNodes().contains(buf))
-                    nodeService.deleteRelationFromNodeToNode(nodeInDB.getId(), buf.getId());
+        Node savedNode = nodeService.saveOrUpdateNodeForm(nodeForm);
+        if(nodeForm.getId() != null) {
+            Node nodeInDB = nodeService.getById(nodeForm.getId());
+            if (nodeInDB != null && nodeInDB.getNodes().size() > savedNode.getNodes().size()) {
+                Iterator<Node> iterator = nodeInDB.getNodes().iterator();
+                while (iterator.hasNext()) {
+                    Node buf = iterator.next();
+                    if (!savedNode.getNodes().contains(buf))
+                        nodeService.deleteRelationFromNodeToNode(nodeInDB.getId(), buf.getId());
+                }
             }
         }
         return "redirect:/node/show/" + savedNode.getId();
@@ -89,5 +99,24 @@ public class NodeController {
         nodeService.delete(Long.valueOf(id));
         return "redirect:/node/list";
     }
+
+    @RequestMapping("/node/distance/{id}")
+    public String distance(@PathVariable String id, Model model){
+        model.addAttribute("nodes", nodeService.listAll());
+        DistanceForm distanceForm = nodeToDistanceForm.convert(nodeService.getById(Long.valueOf(id)));
+        model.addAttribute("distanceForm", distanceForm);
+        return "node/distance";
+    }
+
+    @RequestMapping(value = "/distance", method = RequestMethod.POST)
+    public String calculateDistance(DistanceForm distanceForm, Model model){
+        float distance = nodeService.distanceBetweenNodes(distanceForm.getIdFrom(), distanceForm.getIdTo());
+        distanceForm.setDistance(distance);
+        distanceForm.setNameTo(nodeService.getById(distanceForm.getIdTo()).getName());
+        model.addAttribute("nodes", nodeService.listAll());
+        model.addAttribute("distanceForm", distanceForm);
+        return "node/distance";
+    }
+
 }
 

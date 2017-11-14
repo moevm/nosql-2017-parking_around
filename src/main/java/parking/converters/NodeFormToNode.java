@@ -7,10 +7,7 @@ import org.springframework.util.StringUtils;
 import parking.commands.NodeForm;
 import parking.domain.Node;
 import parking.repositories.NodeRepository;
-import parking.services.NodeService;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Stanislav on 13.11.2017.
