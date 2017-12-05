@@ -29,7 +29,7 @@ public class Node {
     }
 
     @Relationship(type = "EXIST_ROADS_TO", direction = Relationship.OUTGOING)
-    private List<Node> nodes = new ArrayList<Node>();
+    private List<DistanceBtw> distanceBtws = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -63,12 +63,17 @@ public class Node {
         this.longitude = longitude;
     }
 
-    public List<Node> getNodes() {
-        return nodes;
+    public List<DistanceBtw> getNodes() {
+        return distanceBtws;
     }
 
+    public void addDistanceBtw(DistanceBtw distanceBtw){
+        this.distanceBtws.add(distanceBtw);
+    }
+/*
     public void setNodes(List<Node> nodes) {
         this.nodes = nodes;
     }
+    */
 
 }
