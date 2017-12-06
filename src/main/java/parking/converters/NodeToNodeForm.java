@@ -3,6 +3,7 @@ package parking.converters;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import parking.commands.NodeForm;
+import parking.domain.DistanceBtw;
 import parking.domain.Node;
 
 import java.util.ArrayList;
@@ -22,12 +23,12 @@ public class NodeToNodeForm implements Converter<Node, NodeForm> {
         nodeForm.setLatitude(node.getLatitude());
         nodeForm.setLongitude(node.getLongitude());
 
-        List<Node> nodes = node.getNodes();
-        if(nodes.size() != 0) {
+        List<DistanceBtw> distanceBtws = node.getDistanceBtws();
+        if(distanceBtws.size() != 0) {
             StringBuilder sb = new StringBuilder();
-            Iterator<Node> nodeIterator = nodes.iterator();
-            while (nodeIterator.hasNext()) {
-                sb.append(nodeIterator.next().getId() + ",");
+            Iterator<DistanceBtw> distanceBtwsIterator = distanceBtws.iterator();
+            while (distanceBtwsIterator.hasNext()) {
+                sb.append(distanceBtwsIterator.next().getB().getId() + ",");
             }
             sb.deleteCharAt(sb.length()-1);
 

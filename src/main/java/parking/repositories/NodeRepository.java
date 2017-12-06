@@ -19,4 +19,9 @@ public interface NodeRepository extends GraphRepository<Node> {
             "WHERE ID(p) = {id}  AND ID(p1) = {id1} " +
             "RETURN distance(point({ longitude: p.longitude, latitude: p.latitude, crs: 'WGS-84' }), point({ longitude: p1.longitude, latitude: p1.latitude, crs:'WGS-84' }))")
     float distanceBetweenNodes(@Param("id") Long id, @Param("id1") Long id1);
+
+    @Query("RETURN distance(point({ longitude: {longitude1}, latitude: {latitude1}, crs: 'WGS-84' })," +
+            " point({ longitude: {longitude2}, latitude: {latitude2}, crs: 'WGS-84' }))")
+    float distanceBetweenPoints(@Param("longitude1") double longitude1, @Param("latitude1") double latitude1,
+                                @Param("longitude2") double longitude2, @Param("latitude2") double latitude2);
 }

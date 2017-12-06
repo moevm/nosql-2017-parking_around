@@ -46,6 +46,11 @@ public class NodeController {
         return "redirect:/node/list";
     }
 
+    @RequestMapping("/node/parking_around")
+    public String redirToParking(Model model){
+        return "node/parking_around";
+    }
+
     @RequestMapping({"/node/list", "/node"})
     public String listNodes(Model model){
         model.addAttribute("nodes", nodeService.listAll());
@@ -80,6 +85,7 @@ public class NodeController {
         }
 
         Node savedNode = nodeService.saveOrUpdateNodeForm(nodeForm);
+        /*
         if(nodeForm.getId() != null) {
             Node nodeInDB = nodeService.getById(nodeForm.getId());
             if (nodeInDB != null && nodeInDB.getNodes().size() > savedNode.getNodes().size()) {
@@ -91,6 +97,7 @@ public class NodeController {
                 }
             }
         }
+        */
         return "redirect:/node/show/" + savedNode.getId();
     }
 

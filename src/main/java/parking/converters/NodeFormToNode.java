@@ -5,6 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import parking.commands.NodeForm;
+import parking.domain.DistanceBtw;
 import parking.domain.Node;
 import parking.repositories.NodeRepository;
 import java.util.ArrayList;
@@ -33,12 +34,15 @@ public class NodeFormToNode implements Converter<NodeForm, Node> {
         node.setLatitude(nodeForm.getLatitude());
         if(!nodeForm.getNodes().isEmpty()) {
             String[] ids = nodeForm.getNodes().split(",");
-            ArrayList<Node> nodes = new ArrayList<Node>();
+            ArrayList<DistanceBtw> distancesBtw = new ArrayList<>();
 
             for (String id : ids) {
-                nodes.add(nodeRepository.findOne(Long.parseLong(id)));
+                Node direction = nodeRepository.findOne(Long.parseLong(id));
+                float distance = nodeRepository.distanceBetweenPoints(nodeForm.getLongitude(), nodeForm.getLatitude(),
+                        direction.getLongitude(), direction.getLatitude());
+                distancesBtw.add(new DistanceBtw(node, direction, distance));
             }
-            node.setNodes(nodes);
+            node.setDistanceBtws(distancesBtw);
         }
 
         return node;

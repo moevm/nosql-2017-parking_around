@@ -70,7 +70,16 @@ public class Node {
     public void addDistanceBtw(DistanceBtw distanceBtw){
         this.distanceBtws.add(distanceBtw);
     }
-/*
+
+    public void setDistanceBtws(List<DistanceBtw> distanceBtws) {
+        this.distanceBtws = distanceBtws;
+    }
+
+    public List<DistanceBtw> getDistanceBtws() {
+        return distanceBtws;
+    }
+
+    /*
     public void setNodes(List<Node> nodes) {
         this.nodes = nodes;
     }

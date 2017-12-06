@@ -35,7 +35,8 @@
                 <td th:text="${node.name}"></td>
                 <td th:text="${node.latitude}"></td>
                 <td th:text="${node.longitude}"></td>
-                <td th:text="${node.nodes}"></td>
+                <td th:each="direction : ${node.nodes}"
+                    th:text="${direction.id}"></td>
                 <td><a th:href="${'/node/show/' + node.id}">View</a> </td>
                 <td><a th:href="${'/node/edit/' + node.id}">Edit</a> </td>
                 <td><a th:href="${'/node/delete/' + node.id}">Delete</a> </td>
@@ -46,6 +47,9 @@
     <div class="row">
         <div class="col-sm-3">
             <a href="/node/new">New Node </a>
+        </div>
+        <div class="col-sm-3">
+            <a href="/node/parking_around">parking_around</a>
         </div>
 
     </div>

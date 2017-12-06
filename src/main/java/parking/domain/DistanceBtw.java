@@ -24,9 +24,10 @@ public class DistanceBtw {
 
     }
 
-    public DistanceBtw(Node A, Node B){
+    public DistanceBtw(Node A, Node B, float distance){
         this.A = A;
         this.B = B;
+        this.distance = distance;
     }
 
     public Long getId(){
