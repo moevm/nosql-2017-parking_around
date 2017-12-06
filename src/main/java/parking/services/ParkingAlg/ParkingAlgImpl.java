@@ -24,7 +24,7 @@ public class ParkingAlgImpl implements ParkingAlgService{
     }
 
     @Override
-    public void work(ParkingForm parkingForm){
+    public ArrayList<Node>  work(ParkingForm parkingForm){
         ArrayList<Node> validNodes = new ArrayList<>();
         Node nearestNodesToDistinationPoint = new Node();
         float minDistance = Float.MAX_VALUE;
@@ -45,14 +45,17 @@ public class ParkingAlgImpl implements ParkingAlgService{
             }
         }
         ArrayList<Node> way = new ArrayList<>();
-        validNodesFill(validNodes, nearestNodesToDistinationPoint, way, parkingForm.getN());
+        searchWay(validNodes, nearestNodesToDistinationPoint, way, parkingForm.getN());
+        /*
         for(Node node: way)
             System.out.print(node.getName() + "->");
+        */
+        return way;
 
         //
     }
 
-    public void validNodesFill(List<Node> validNodes, Node node, ArrayList<Node> answerList, int N){
+    public void searchWay(List<Node> validNodes, Node node, ArrayList<Node> answerList, int N){
         System.out.println(N);
         answerList.add(node);
         Node preNode = null;
@@ -91,7 +94,7 @@ public class ParkingAlgImpl implements ParkingAlgService{
                     nearestNode = road;
                 }
             }
-            validNodesFill(validNodes, nearestNode, answerList, N);
+            searchWay(validNodes, nearestNode, answerList, N);
         }
     }
 }

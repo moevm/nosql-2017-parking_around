@@ -8,7 +8,7 @@ public class ParkingForm {
     private float DistinationLatitude;
     private float Rmax;
     private int N;
-    private String answer;
+    private String answer = " ";
 
     public float getDistinationLongitude() {
         return DistinationLongitude;
@@ -44,5 +44,9 @@ public class ParkingForm {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getAnswer() {
+        return answer;
     }
 }

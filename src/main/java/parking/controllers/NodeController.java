@@ -16,6 +16,7 @@ import parking.domain.Node;
 import parking.services.NodeService;
 import parking.services.ParkingAlg.ParkingAlgService;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by Stanislav on 13.11.2017.
@@ -59,9 +60,15 @@ public class NodeController {
     }
 
     @RequestMapping(value = "/parkingAlg", method = RequestMethod.POST)
-    public String parkingAlg(@Valid ParkingForm parkingForm){
-        parkingAlgService.work(parkingForm);
-        return "redirect:/node/show/";
+    public String parkingAlg(Model model, @Valid ParkingForm parkingForm ){
+        ArrayList<Node> way = parkingAlgService.work(parkingForm);
+        StringBuilder sb = new StringBuilder();
+        for(Node node: way)
+            sb.append(node.getName() + "->");
+        sb.append("end");
+        parkingForm.setAnswer(sb.toString());
+        model.addAttribute("ParkingForm", parkingForm);
+        return "node/parking_around";
     }
 
     @RequestMapping({"/node/list", "/node"})
