@@ -14,9 +14,11 @@ public class DistanceBtw {
     @GraphId
     private Long id;
 
-    @StartNode Node A;
+    @StartNode
+    private Node A;
 
-    @EndNode Node B;
+    @EndNode
+    private Node B;
 
     float distance;
 

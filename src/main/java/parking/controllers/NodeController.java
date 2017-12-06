@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import parking.commands.DistanceForm;
 import parking.commands.NodeForm;
+import parking.commands.ParkingForm;
 import parking.converters.NodeToDistanceForm;
 import parking.converters.NodeToNodeForm;
 import parking.domain.Node;
 import parking.services.NodeService;
-
+import parking.services.ParkingAlg.ParkingAlgService;
 import javax.validation.Valid;
-import java.util.Iterator;
 
 /**
  * Created by Stanislav on 13.11.2017.
@@ -25,6 +25,7 @@ public class NodeController {
     private NodeService nodeService;
     private NodeToNodeForm nodeToNodeForm;
     private NodeToDistanceForm nodeToDistanceForm;
+    private ParkingAlgService parkingAlgService;
 
     @Autowired
     public void setNodeToNodeForm(NodeToNodeForm nodeToNodeForm){
@@ -41,6 +42,11 @@ public class NodeController {
         this.nodeToDistanceForm = nodeToDistanceForm;
     }
 
+    @Autowired
+    public void setParkingAlgService(ParkingAlgService parkingAlgService) {
+        this.parkingAlgService = parkingAlgService;
+    }
+
     @RequestMapping("/")
     public String redirToList(){
         return "redirect:/node/list";
@@ -48,7 +54,14 @@ public class NodeController {
 
     @RequestMapping("/node/parking_around")
     public String redirToParking(Model model){
+        model.addAttribute("ParkingForm", new ParkingForm());
         return "node/parking_around";
+    }
+
+    @RequestMapping(value = "/parkingAlg", method = RequestMethod.POST)
+    public String parkingAlg(@Valid ParkingForm parkingForm){
+        parkingAlgService.work(parkingForm);
+        return "redirect:/node/show/";
     }
 
     @RequestMapping({"/node/list", "/node"})

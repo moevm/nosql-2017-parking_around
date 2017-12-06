@@ -6,6 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import parking.domain.Node;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by Stanislav on 13.11.2017.
  */
@@ -14,6 +17,12 @@ public interface NodeRepository extends GraphRepository<Node> {
 
     @Query("MATCH (n:Node)-[r:EXIST_ROADS_TO]->(n1:Node) WHERE ID(n)={idFrom} AND ID(n1)={idTo} DELETE r")
     void deleteRelationFromNodeToNode(@Param("idFrom")Long idFrom, @Param("idTo") Long idTo);
+/*
+    @Query("MATCH (n:Node) RETURN n")
+    Collection<Node> getNodes();
+*/
+    @Query("MATCH (n:Node)-[r:EXIST_ROADS_TO]->(n1:Node) RETURN n,r")
+    Collection<Node> getNodes();
 
     @Query("MATCH (p:Node), (p1:Node) " +
             "WHERE ID(p) = {id}  AND ID(p1) = {id1} " +
