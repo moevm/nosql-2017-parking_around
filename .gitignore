@@ -2,6 +2,7 @@
 /.idea
 /target
 /libs/
+/data/
 /1.JPG
 /ER(parking-around).jpg
 /2.JPG
@@ -10,3 +11,6 @@
 /3.JPG
 src/main/resources/templates/empty.txt
 src/test/
+/parking-backend/parking-backend.iml
+/parking-frontend/nodejs/
+/parking-frontend/node_modules/
