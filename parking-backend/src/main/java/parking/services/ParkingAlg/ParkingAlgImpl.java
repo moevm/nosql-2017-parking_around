@@ -24,7 +24,7 @@ public class ParkingAlgImpl implements ParkingAlgService{
     }
 
     @Override
-    public ArrayList<Node>  work(ParkingForm parkingForm){
+    public ArrayList<Node> work(ParkingForm parkingForm){
         ArrayList<Node> validNodes = new ArrayList<>();
         Node nearestNodesToDistinationPoint = new Node();
         float minDistance = Float.MAX_VALUE;
@@ -34,8 +34,8 @@ public class ParkingAlgImpl implements ParkingAlgService{
             float distance = nodeRepository.distanceBetweenPoints(
                     allNodes.get(i).getLongitude(),
                     allNodes.get(i).getLatitude(),
-                    parkingForm.getDistinationLongitude(),
-                    parkingForm.getDistinationLatitude());
+                    parkingForm.getDestinationLongitude(),
+                    parkingForm.getDestinationLatitude());
             if (distance < parkingForm.getRmax()) {
                 validNodes.add(allNodes.get(i));
                 if (distance < minDistance) {

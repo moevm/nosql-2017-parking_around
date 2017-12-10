@@ -1,14 +1,15 @@
-import {Router} from "@angular/router";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/toPromise';
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AppService {
   constructor(private http: Http, private router: Router) {
   }
 
-  getDirection(coordinate, radius): Promise<Response> {
-    return this.http.post('http://localhost:8080/route/' + radius, coordinate).toPromise();
+  getDirection(radius, coordinate): Promise<Response> {
+    return this.http.get('http://localhost:8080/route/build/' + radius + '?latitude='
+      + coordinate.latitude + '&longitude=' + coordinate.longitude).toPromise();
   }
 }

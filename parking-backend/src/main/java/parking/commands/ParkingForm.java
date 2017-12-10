@@ -4,26 +4,26 @@ package parking.commands;
  * Created by Stanislav on 06.12.2017.
  */
 public class ParkingForm {
-    private float DistinationLongitude;
-    private float DistinationLatitude;
+    private float destinationLongitude;
+    private float destinationLatitude;
     private float Rmax;
     private int N;
     private String answer = " ";
 
-    public float getDistinationLongitude() {
-        return DistinationLongitude;
+    public float getDestinationLongitude() {
+        return destinationLongitude;
     }
 
-    public void setDistinationLongitude(float distinationLongitude) {
-        DistinationLongitude = distinationLongitude;
+    public void setDestinationLongitude(float destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
     }
 
-    public float getDistinationLatitude() {
-        return DistinationLatitude;
+    public float getDestinationLatitude() {
+        return destinationLatitude;
     }
 
-    public void setDistinationLatitude(float distinationLatitude) {
-        DistinationLatitude = distinationLatitude;
+    public void setDestinationLatitude(float destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
     }
 
     public float getRmax() {

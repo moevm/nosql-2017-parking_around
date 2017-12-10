@@ -9,6 +9,7 @@ import parking.domain.Node;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Stanislav on 13.11.2017.
@@ -37,5 +38,10 @@ public class NodeToNodeForm implements Converter<Node, NodeForm> {
         else
             nodeForm.setNodes("");
         return nodeForm;
+    }
+
+    public List<NodeForm> convertList(List<Node> nodeList) {
+        return nodeList.stream().map(this::convert)
+                .collect(Collectors.toList());
     }
 }

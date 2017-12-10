@@ -76,7 +76,7 @@ export class MainComponent implements OnInit {
   }
 
   getDirection() {
-    this.appService.getDirection(this.coordinate, this.radius)
+    this.appService.getDirection(this.radius, this.coordinate)
       .then((data) => {
       this.routeList = data.json() as ICoordinate[];
       this.route = this.convertListCoordinateInArray(this.routeList);
