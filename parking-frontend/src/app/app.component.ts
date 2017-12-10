@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import 'angular2-openlayers';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
