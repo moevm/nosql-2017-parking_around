@@ -33,4 +33,10 @@ public interface NodeRepository extends GraphRepository<Node> {
             " point({ longitude: {longitude2}, latitude: {latitude2}, crs: 'WGS-84' }))")
     float distanceBetweenPoints(@Param("longitude1") double longitude1, @Param("latitude1") double latitude1,
                                 @Param("longitude2") double longitude2, @Param("latitude2") double latitude2);
+
+    @Query("CALL apoc.load.json(\"file:///{fileRoute}\") YIELD value\n" +
+            "UNWIND value.geometry.coordinates as coords\n" +
+            "CREATE (n:Node {name: value.properties.name, longitude:coords[0], latitude: coords[1]})\n" +
+            "\n")
+    void importFromNodes(@Param("fileRoute") String fileRoute);
 }

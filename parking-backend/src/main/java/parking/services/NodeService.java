@@ -1,7 +1,5 @@
 package parking.services;
 
-import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.transaction.annotation.Transactional;
 import parking.commands.NodeForm;
 import parking.domain.Node;
 
