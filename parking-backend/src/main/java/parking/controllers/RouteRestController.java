@@ -29,7 +29,7 @@ public class RouteRestController {
     }
 
     @RequestMapping(value = "/build/{radius}", method = RequestMethod.GET)
-    public List<NodeForm> updateOptions(@PathVariable("radius") Long radius, @RequestParam("latitude") Float latitude,
+    public List<NodeForm> buildRoute(@PathVariable("radius") Long radius, @RequestParam("latitude") Float latitude,
                                         @RequestParam("longitude") Float longitude) {
         ParkingForm parkingForm = new ParkingForm();
         parkingForm.setDestinationLatitude(latitude);
