@@ -40,8 +40,8 @@ public class DataServiceImpl implements DataService {
 
 
     public boolean importJSON() {
-        String filePath = "git/road1.json";
-        nodeRepository.importFromNodes(filePath);
+//        String filePath = "git/road1.json";
+//        nodeRepository.importFromNodes(filePath);
         return true;
     }
 
@@ -53,9 +53,9 @@ public class DataServiceImpl implements DataService {
         Double average_lat = averageCoords.get(0);
         Double average_long = averageCoords.get(1);
 
+        // SPBETU coordinates
         ArrayList<Node> letiNodes = getNodesAround(nodes, 59.58179, 30.19250, 0.1);
-        // add letinodes
-        // add rel-s by letinodes with same id or coordinates
+
         for (Node n : letiNodes
                 ) {
             System.out.println(letiNodes.size());
@@ -102,7 +102,7 @@ public class DataServiceImpl implements DataService {
                 nodes.add(new Node(r.getProperties().getId().longValue(),
                         r.getProperties().getName(), c.get(1), c.get(0)));
             }
-            setRouteRelations(nodes, r.getProperties().getOneway());
+            setRouteRelations(nodes, r.getProperties().getOneway()); // slow with it
         }
         return nodes;
     }
