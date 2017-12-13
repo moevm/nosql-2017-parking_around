@@ -99,11 +99,14 @@ public class DataServiceImpl implements DataService {
     public ArrayList<Node> getNodes(ArrayList<Road> roads) {
         ArrayList<Node> nodes = new ArrayList<>();
         for (Road r : roads) {
+            ArrayList<Node> localNodes = new ArrayList<>();
             for (ArrayList<Double> c : r.getGeometry().getCoordinates()) {
-                nodes.add(new Node(r.getProperties().getId().longValue(),
+                localNodes.add(new Node(r.getProperties().getId().longValue(),
                         r.getProperties().getName(), c.get(1), c.get(0)));
             }
-            setRouteRelations(nodes, r.getProperties().getOneway()); // slow with it
+            setRouteRelations(localNodes, r.getProperties().getOneway()); // slow with it
+            nodes.addAll(localNodes);
+            localNodes.clear();
         }
         return nodes;
     }
