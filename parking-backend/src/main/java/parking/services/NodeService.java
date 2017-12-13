@@ -22,4 +22,5 @@ public interface NodeService {
     float distanceBetweenNodes(Long id, Long id1);
 
     Node saveOrUpdateNodeForm(NodeForm nodeForm);
+
 }

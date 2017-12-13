@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import parking.domain.DistanceBtw;
 import parking.domain.Node;
 import parking.domain.Road;
 import parking.repositories.NodeRepository;
@@ -52,13 +53,15 @@ public class DataServiceImpl implements DataService {
         Double average_lat = averageCoords.get(0);
         Double average_long = averageCoords.get(1);
 
-        ArrayList<Node> letiNodes = getNodesAround(nodes, 59.58179, 30.19250, 0.15);
+        ArrayList<Node> letiNodes = getNodesAround(nodes, 59.58179, 30.19250, 0.1);
         // add letinodes
         // add rel-s by letinodes with same id or coordinates
         for (Node n : letiNodes
                 ) {
+            System.out.println(letiNodes.size());
             nodeService.saveOrUpdate(n);
         }
+        nodeRepository.createCrossRoadsRelations(); // соединяем перекрестки
         System.out.println("Check1");
     }
 
@@ -73,6 +76,7 @@ public class DataServiceImpl implements DataService {
             }
 
         }
+        System.out.println("Подошло " + nodesAround.size() + " вершин");
         return nodesAround;
     }
 
@@ -93,14 +97,12 @@ public class DataServiceImpl implements DataService {
 
     public ArrayList<Node> getNodes(ArrayList<Road> roads) {
         ArrayList<Node> nodes = new ArrayList<>();
-        for (Road r : roads
-                ) {
-            for (ArrayList<Double> c : r.getGeometry().getCoordinates()
-                    ) {
-                nodes.add(new Node(r.getProperties().getId().longValue(),  // todo same id, change
+        for (Road r : roads) {
+            for (ArrayList<Double> c : r.getGeometry().getCoordinates()) {
+                nodes.add(new Node(r.getProperties().getId().longValue(),
                         r.getProperties().getName(), c.get(1), c.get(0)));
             }
-
+            setRouteRelations(nodes, r.getProperties().getOneway());
         }
         return nodes;
     }
@@ -121,6 +123,39 @@ public class DataServiceImpl implements DataService {
         } else {
             System.out.println("Can't read file");
         }
-        return data;
+        ArrayList<Road> notFootway = new ArrayList<>();
+
+        for (Road r: data) {
+            if (!r.getProperties().getType().equals("footway")) {
+                notFootway.add(r);
+            }
+        }
+        return notFootway;
+    }
+
+    public DistanceBtw getDistance(Node a, Node b) {
+        float distance = nodeRepository.distanceBetweenPoints(a.getLongitude(), a.getLatitude(),
+                b.getLongitude(), b.getLatitude());
+        return new DistanceBtw(a, b, distance);
+    }
+
+    public void setRouteRelations(ArrayList<Node> nodes, Integer oneway) {
+        if (nodes.size() > 0) {
+            for (int i = 0; i < nodes.size() - 1; i++) {
+                for (int j = 1; j < nodes.size(); j++) {
+                    Node a = nodes.get(i), b = nodes.get(j);
+                    if (a.getRouteId().equals(b.getRouteId())) {
+                        a.addDistanceBtw(getDistance(a, b));
+                        if (oneway == 0) {
+                            b.addDistanceBtw(getDistance(b,a));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void setCrossRoads(ArrayList<Node> nodes) {
+
     }
 }

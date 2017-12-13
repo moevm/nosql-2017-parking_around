@@ -6,7 +6,7 @@ import parking.domain.Road;
 import java.util.ArrayList;
 
 /**
- * Created by FlipBook TP300LD on 12.12.2017.
+ * Service for work with map data
  */
 public interface DataService {
 
@@ -21,4 +21,8 @@ public interface DataService {
     ArrayList<Node> getNodes(ArrayList<Road> roads);
 
     ArrayList<Double> getAverageCoords(ArrayList<Node> nodes);
+
+    void setRouteRelations(ArrayList<Node> nodes, Integer oneway);
+
+    void setCrossRoads(ArrayList<Node> nodes);
 }

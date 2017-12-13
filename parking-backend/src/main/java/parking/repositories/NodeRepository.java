@@ -39,4 +39,10 @@ public interface NodeRepository extends GraphRepository<Node> {
             "CREATE (n:Node {name: value.properties.name, longitude:coords[0], latitude: coords[1]})\n" +
             "\n")
     void importFromNodes(@Param("fileRoute") String fileRoute);
+
+    @Query("MATCH (a:Node),(b:Node)\n" +
+            "WHERE a.longitude = b.longitude and a.latitude = b.latitude and a.routeId <> b.routeId\n" +
+            "CREATE (a)-[r:EXIST_ROADS_TO]->(b)\n" +
+            "RETURN a")
+    void createCrossRoadsRelations();
 }
