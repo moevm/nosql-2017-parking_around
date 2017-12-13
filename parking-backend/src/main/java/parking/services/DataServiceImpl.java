@@ -25,7 +25,7 @@ public class DataServiceImpl implements DataService {
 
     public boolean importJSON(){
 
-        String filePath = "git/road.json";
+        String filePath = "git/road1.json";
         nodeRepository.importFromNodes(filePath);
         return true;
     }
