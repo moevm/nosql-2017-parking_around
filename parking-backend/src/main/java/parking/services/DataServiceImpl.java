@@ -145,17 +145,27 @@ public class DataServiceImpl implements DataService {
 
     public void setRouteRelations(ArrayList<Node> nodes, Integer oneway) {
         if (nodes.size() > 0) {
-            for (int i = 0; i < nodes.size() - 1; i++) {
-                for (int j = 1; j < nodes.size(); j++) {
-                    Node a = nodes.get(i), b = nodes.get(j);
-                    if (a.getRouteId().equals(b.getRouteId())) {
-                        a.addDistanceBtw(getDistance(a, b));
-                        if (oneway == 0) {
-                            b.addDistanceBtw(getDistance(b, a));
-                        }
+            for (int i = 1; i < nodes.size(); i++) {
+                Node a = nodes.get(i-1), b = nodes.get(i);
+                if (a.getRouteId().equals(b.getRouteId())) {
+                    a.addDistanceBtw(getDistance(a, b));
+                    if (oneway == 0) {
+                        b.addDistanceBtw(getDistance(b, a));
                     }
                 }
+
             }
+//            for (int i = 0; i < nodes.size() - 1; i++) {
+//                for (int j = 1; j < nodes.size(); j++) {
+//                    Node a = nodes.get(i), b = nodes.get(j);
+//                    if (a.getRouteId().equals(b.getRouteId())) {
+//                        a.addDistanceBtw(getDistance(a, b));
+//                        if (oneway == 0) {
+//                            b.addDistanceBtw(getDistance(b, a));
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 }
