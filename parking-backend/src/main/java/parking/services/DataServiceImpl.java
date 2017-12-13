@@ -26,6 +26,10 @@ public class DataServiceImpl implements DataService {
 
     private NodeService nodeService;
     private NodeRepository nodeRepository;
+    private static final Type ROAD_TYPE =
+            new TypeToken<List<Road>>() {
+            }.getType();
+
 
 
     @Autowired

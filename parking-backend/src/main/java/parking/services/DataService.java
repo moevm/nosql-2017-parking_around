@@ -12,9 +12,6 @@ import java.util.List;
  * Created by FlipBook TP300LD on 12.12.2017.
  */
 public interface DataService {
-    public static final Type ROAD_TYPE =
-            new TypeToken<List<Road>>() {
-            }.getType();
 
     boolean importJSON();
 
