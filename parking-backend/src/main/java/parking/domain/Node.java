@@ -22,8 +22,10 @@ public class Node {
     private double latitude;
     private double longitude;
 
-    public Node(Long id, String name, double latitude, double longitude) {
-        this.id = id;
+    private Long routeId;
+
+    public Node(Long routeId, String name, double latitude, double longitude) {
+        this.routeId = routeId;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -86,6 +88,14 @@ public class Node {
 
     public List<DistanceBtw> getDistanceBtws() {
         return distanceBtws;
+    }
+
+    public Long getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(Long routeId) {
+        this.routeId = routeId;
     }
 
     /*
