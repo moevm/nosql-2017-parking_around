@@ -31,7 +31,6 @@ public class DataServiceImpl implements DataService {
             }.getType();
 
 
-
     @Autowired
     public DataServiceImpl(NodeService service, NodeRepository repository) {
         nodeService = service;
@@ -56,8 +55,8 @@ public class DataServiceImpl implements DataService {
         ArrayList<Node> letiNodes = getNodesAround(nodes, 59.58179, 30.19250, 0.15);
         // add letinodes
         // add rel-s by letinodes with same id or coordinates
-        for (Node n: letiNodes
-             ) {
+        for (Node n : letiNodes
+                ) {
             nodeService.saveOrUpdate(n);
         }
         System.out.println("Check1");
