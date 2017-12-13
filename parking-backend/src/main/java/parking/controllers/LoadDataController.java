@@ -19,6 +19,6 @@ public class LoadDataController {
 
     @RequestMapping(value = "/data", method = RequestMethod.GET)
     public void buildRoute() {
-        dataService.importJSON();
+        dataService.mainImport();
     }
 }

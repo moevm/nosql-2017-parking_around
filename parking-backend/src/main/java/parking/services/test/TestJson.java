@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Test class for data import
  */
+@SuppressWarnings("Duplicates")
 public class TestJson {
     private static final Type ROAD_TYPE =
             new TypeToken<List<Road>>() {
