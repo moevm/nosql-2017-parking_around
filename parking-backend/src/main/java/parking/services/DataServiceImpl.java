@@ -46,7 +46,8 @@ public class DataServiceImpl implements DataService {
     }
 
     public void mainImport() {
-        ArrayList<Road> roads = getRoadList();
+        String filePath = "C:\\git\\road.json";
+        ArrayList<Road> roads = getRoadList(filePath);
         ArrayList<Node> nodes = getNodes(roads);
 
         ArrayList<Double> averageCoords = getAverageCoords(nodes);
@@ -107,8 +108,8 @@ public class DataServiceImpl implements DataService {
         return nodes;
     }
 
-    public ArrayList<Road> getRoadList() {
-        File file = new File("C:\\git\\road.json");
+    public ArrayList<Road> getRoadList(String filePath) {
+        File file = new File(filePath);
         ArrayList<Road> data = new ArrayList<>();
         if (file.canRead()) {
             Gson gson = new Gson();
@@ -125,7 +126,7 @@ public class DataServiceImpl implements DataService {
         }
         ArrayList<Road> notFootway = new ArrayList<>();
 
-        for (Road r: data) {
+        for (Road r : data) {
             if (!r.getProperties().getType().equals("footway")) {
                 notFootway.add(r);
             }
@@ -147,15 +148,11 @@ public class DataServiceImpl implements DataService {
                     if (a.getRouteId().equals(b.getRouteId())) {
                         a.addDistanceBtw(getDistance(a, b));
                         if (oneway == 0) {
-                            b.addDistanceBtw(getDistance(b,a));
+                            b.addDistanceBtw(getDistance(b, a));
                         }
                     }
                 }
             }
         }
-    }
-
-    public void setCrossRoads(ArrayList<Node> nodes) {
-
     }
 }

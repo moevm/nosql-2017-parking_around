@@ -16,13 +16,11 @@ public interface DataService {
 
     ArrayList<Node> getNodesAround(ArrayList<Node> nodes, Double needed_lat, Double needed_long, Double r);
 
-    ArrayList<Road> getRoadList();
+    ArrayList<Road> getRoadList(String filePath);
 
     ArrayList<Node> getNodes(ArrayList<Road> roads);
 
     ArrayList<Double> getAverageCoords(ArrayList<Node> nodes);
 
     void setRouteRelations(ArrayList<Node> nodes, Integer oneway);
-
-    void setCrossRoads(ArrayList<Node> nodes);
 }
