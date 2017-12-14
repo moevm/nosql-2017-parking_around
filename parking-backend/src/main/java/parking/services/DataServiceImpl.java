@@ -45,7 +45,7 @@ public class DataServiceImpl implements DataService {
         return true;
     }
 
-    public void mainImport() {
+    public void mainImport(Double latitude, Double longitude, Double lambda) {
         String filePath = "C:\\git\\road.json";
         ArrayList<Road> roads = getRoadList(filePath);
         ArrayList<Node> nodes = getNodes(roads);
@@ -55,7 +55,8 @@ public class DataServiceImpl implements DataService {
         Double average_long = averageCoords.get(1);
 
         // SPBETU coordinates
-        ArrayList<Node> letiNodes = getNodesAround(nodes, 59.58179, 30.19250, 0.1);
+//        ArrayList<Node> letiNodes = getNodesAround(nodes, 59.58179, 30.19250, 0.1);
+        ArrayList<Node> letiNodes = getNodesAround(nodes, latitude, longitude, lambda);
 
         for (Node n : letiNodes
                 ) {
@@ -78,6 +79,7 @@ public class DataServiceImpl implements DataService {
 
         }
         System.out.println("Подошло " + nodesAround.size() + " вершин");
+        setRouteRelations(nodesAround, 0);
         return nodesAround;
     }
 
@@ -104,7 +106,7 @@ public class DataServiceImpl implements DataService {
                 localNodes.add(new Node(r.getProperties().getId().longValue(),
                         r.getProperties().getName(), c.get(1), c.get(0)));
             }
-            setRouteRelations(localNodes, r.getProperties().getOneway()); // slow with it
+//            setRouteRelations(localNodes, r.getProperties().getOneway()); // slow with it
             nodes.addAll(localNodes);
             localNodes.clear();
         }

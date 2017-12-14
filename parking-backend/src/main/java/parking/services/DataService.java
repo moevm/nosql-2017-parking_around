@@ -12,7 +12,7 @@ public interface DataService {
 
     boolean importJSON();
 
-    void mainImport();
+    void mainImport(Double latitude, Double longitude, Double lambda);
 
     ArrayList<Node> getNodesAround(ArrayList<Node> nodes, Double needed_lat, Double needed_long, Double r);
 

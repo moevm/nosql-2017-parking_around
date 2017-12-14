@@ -3,6 +3,7 @@ package parking.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import parking.services.DataService;
 
@@ -18,7 +19,8 @@ public class LoadDataController {
     }
 
     @RequestMapping(value = "/data", method = RequestMethod.GET)
-    public void buildRoute() {
-        dataService.mainImport();
+    public void buildRoute(@RequestParam("latitude") Double latitude,
+                           @RequestParam("longitude") Double longitude, @RequestParam("lambda") Double lambda) {
+        dataService.mainImport(latitude, longitude, lambda);
     }
 }
