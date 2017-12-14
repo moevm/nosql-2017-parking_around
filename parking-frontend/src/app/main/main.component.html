@@ -3,14 +3,30 @@
     <div class="form-group">
       <label class="required ">Радиус поиска: </label>
       <label for="radiusInp" aria-haspopup="true" role="tooltip"
-             [class.invalid]="radius.touched && !radius.valid"
+             [class.invalid]="radiusField.touched && !radiusField.valid"
              class="tooltip tooltip-validation tooltip-md tooltip-top-left">
         <input type="text" id="radiusInp" required pattern="[1-9]\d{0,9}$" [(ngModel)]="radius"
                name="radiusField" #radiusField="ngModel" value="{{radius}}">
         <span class="tooltip-content">Поле должно содержать цифры!</span>
       </label>
-      <button class="btn" [disabled]="radius.touched && !radius.valid" (click)="getDirection()">Найти</button>
+      <button class="btn" [disabled]="radiusField.touched && !radiusField.valid" (click)="getDirection()">Найти</button>
     </div>
+    <ng-container *ngIf="loading">
+      <p>Loading...</p>
+      <div class="progress loop">
+        <progress></progress>
+      </div>
+    </ng-container>
+    <clr-alert *ngIf="finish && !errorFlag" clrAlertType="alert-success">
+      <div class="alert-item">
+        Маршрут построен.
+      </div>
+    </clr-alert>
+    <clr-alert *ngIf="finish && errorFlag" clrAlertType="alert-danger">
+      <div class="alert-item">
+        Ошибка. Не удалось построить маршрут.
+      </div>
+    </clr-alert>
     <aol-map [width]="'1000px'" [height]="'500px'" (onClick) ="click($event)">
       <aol-interaction-default></aol-interaction-default>
       <aol-view [zoom]="15">
@@ -32,6 +48,17 @@
               </aol-style-circle>
             </aol-style>
           </aol-feature>
+          <!--<aol-feature>-->
+            <!--<aol-geometry-point>-->
+              <!--<aol-coordinate [x]='coordinate.longitude' [y]='coordinate.latitude' [srid]="'EPSG:4326'"></aol-coordinate>-->
+            <!--</aol-geometry-point>-->
+            <!--<aol-style>-->
+              <!--<aol-style-circle [radius]="100">-->
+                <!--<aol-style-stroke [color]="'black'"></aol-style-stroke>-->
+                <!--<aol-style-fill [color]="[192,223,240,0.5]">></aol-style-fill>-->
+              <!--</aol-style-circle>-->
+            <!--</aol-style>-->
+          <!--</aol-feature>-->
           <aol-feature>
             <aol-geometry-linestring>
               <aol-collection-coordinates
@@ -40,21 +67,9 @@
               </aol-collection-coordinates>
             </aol-geometry-linestring>
             <aol-style>
-              <aol-style-stroke [color]="'blue'"></aol-style-stroke>
+              <aol-style-stroke [width] ="5" [color]="'blue'"></aol-style-stroke>
             </aol-style>
           </aol-feature>
-          <!--<aol-feature>-->
-            <!--<aol-geometry-polygon>-->
-              <!--<aol-collection-coordinates-->
-                <!--[coordinates]= 'coordinateArray' [srid]="'EPSG:4326'">-->
-              <!--</aol-collection-coordinates>-->
-            <!--</aol-geometry-polygon>-->
-            <!--<aol-style>-->
-              <!--<aol-style-stroke [color]="'blue'"></aol-style-stroke>-->
-              <!--<aol-style-fill [color]="[192,223,240,0.5]"></aol-style-fill>-->
-            <!--</aol-style>-->
-          <!--</aol-feature>-->
-
         </aol-source-vector>
       </aol-layer-vector>
     </aol-map>

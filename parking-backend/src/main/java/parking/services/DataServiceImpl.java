@@ -46,7 +46,7 @@ public class DataServiceImpl implements DataService {
     }
 
     public void mainImport(Double latitude, Double longitude, Double lambda) {
-        String filePath = "C:\\git\\road.json";
+        String filePath = "maps\\road_1.json";
         ArrayList<Road> roads = getRoadList(filePath);
         ArrayList<Node> nodes = getNodes(roads);
 

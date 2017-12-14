@@ -26,13 +26,17 @@ export class MainComponent implements OnInit {
   routeList: ICoordinate[];
   errorFlag: boolean = false;
   radius: number = 5;
+  loading: boolean = false;
+  finish: boolean = false;
 
   init() {
-    this.coordinate.latitude = 59.991169;
-    this.coordinate.longitude = 30.319998;
+    this.coordinate.latitude = 59.97732097913405;
+    this.coordinate.longitude = 30.319445246184046;
   }
 
   click(event) {
+    this.finish = false;
+    this.errorFlag = false;
     this.coordinatesInRad = [];
     this.route = [];
     let arr = event.coordinate;
@@ -76,12 +80,18 @@ export class MainComponent implements OnInit {
   }
 
   getDirection() {
+    this.loading = true;
     this.appService.getDirection(this.radius, this.coordinate)
       .then((data) => {
       this.routeList = data.json() as ICoordinate[];
       this.route = this.convertListCoordinateInArray(this.routeList);
+      console.log(this.route);
+      this.loading = false;
+      this.finish = true;
     }).catch(() => {
       this.errorFlag = true;
+      this.loading = false;
+      this.finish = true;
     });
   }
 }
