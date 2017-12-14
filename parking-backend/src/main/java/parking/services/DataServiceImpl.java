@@ -74,7 +74,7 @@ public class DataServiceImpl implements DataService {
             if (Math.abs(n.getLatitude() - needed_lat) < r && Math.abs(n.getLongitude() - needed_long) < r) {
                 nodesAround.add(n);
             } else {
-                System.out.println(n.getName() + " не подходит");
+//                System.out.println(n.getName() + " не подходит");
             }
 
         }
