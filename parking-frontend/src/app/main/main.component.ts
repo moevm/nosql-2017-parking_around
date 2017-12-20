@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ICoordinate} from "../interface/coordinate";
 import * as proj4x from 'proj4';
 import {AppService} from "../app.service";
-
 let proj4 = (proj4x as any).default;
-
 
 @Component({
   selector: 'app-main',
@@ -25,7 +23,7 @@ export class MainComponent implements OnInit {
   route: [number, number][] = [];
   routeList: ICoordinate[];
   errorFlag: boolean = false;
-  radius: number = 5;
+  radius: number = 500;
   loading: boolean = false;
   finish: boolean = false;
 
@@ -43,25 +41,20 @@ export class MainComponent implements OnInit {
     let newCoord = proj4('EPSG:3857', 'EPSG:4326').forward(arr);
     this.coordinate.longitude = newCoord[0];
     this.coordinate.latitude = newCoord[1];
-    this.getPoint(this.coordinate.latitude, this.coordinate.longitude, 10);
-    console.log(this.coordinatesInRad);
+    // this.getPoint(this.coordinate.latitude, this.coordinate.longitude, 10);
+    // console.log(this.coordinatesInRad);
   }
 
-  getPoint(lat, lon, r) {
-    let R = 6371; // Radius of the earth in km
-    let d_lat = Math.PI * R / 180;
-    let d_long = Math.cos(lat) * Math.PI * R / 180;
-    let maxChangeLatitude = r / d_lat;
-    let maxChangeLongitude = r / d_long;
-    let i = 0;
-    while (i <= 4) {
-      let newLat = lat + (2 * Math.random() - 1) * maxChangeLatitude;
-      let newLong = lon + (2 * Math.random() - 1) * maxChangeLongitude;
-      let coord = this.createCoordinate(newLat, newLong);
-      this.coordinatesInRad.push(coord);
-      i++;
-    }
+  private distance(lat1, lon1, lat2, lon2) {
+    let p = 0.017453292519943295;    // Math.PI / 180
+    let c = Math.cos;
+    let a = 0.5 - c((lat2 - lat1) * p)/2 +
+      c(lat1 * p) * c(lat2 * p) *
+      (1 - c((lon2 - lon1) * p))/2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
   }
+
 
   private createCoordinate(lat, long) {
     return {
@@ -93,5 +86,20 @@ export class MainComponent implements OnInit {
       this.loading = false;
       this.finish = true;
     });
+  }
+
+  setRad(event) {
+    console.log(event.feature);
+    console.log(event.feature.O.geometry.o);
+    let arr = event.feature.getGeometry().A;
+    console.log(arr);
+    let arr1 = [arr[0],arr[1]];
+    let arr2 = [arr[2],arr[3]];
+    let newCoord = proj4('EPSG:3857', 'EPSG:4326').forward(arr1);
+    let newCoord2 = proj4('EPSG:3857', 'EPSG:4326').forward(arr2);
+    console.log(newCoord);
+    console.log(newCoord2);
+    let distance = this.distance(this.coordinate.latitude,this.coordinate.longitude,arr1[1],arr1[0]);
+    console.log(distance);
   }
 }

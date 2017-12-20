@@ -27,8 +27,9 @@
         Ошибка. Не удалось построить маршрут.
       </div>
     </clr-alert>
-    <aol-map [width]="'1000px'" [height]="'500px'" (onClick) ="click($event)">
+    <aol-map [width]="'1000px'" [height]="'500px'" (onDblClick) ="click($event)">
       <aol-interaction-default></aol-interaction-default>
+      <aol-interaction-draw type="Circle" stopClick="true" (onDrawEnd) = "setRad($event)"></aol-interaction-draw>
       <aol-view [zoom]="15">
         <aol-coordinate [x]='coordinate.longitude' [y]='coordinate.latitude'  [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
@@ -44,7 +45,7 @@
             <aol-style>
               <aol-style-circle [radius]="10">
                 <aol-style-stroke [color]="'black'"></aol-style-stroke>
-                <aol-style-fill [color]="'green'"></aol-style-fill>
+                <aol-style-fill [color]="'blue'"></aol-style-fill>
               </aol-style-circle>
             </aol-style>
           </aol-feature>
