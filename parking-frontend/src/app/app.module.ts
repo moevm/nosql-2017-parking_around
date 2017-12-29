@@ -10,6 +10,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {ClarityModule} from "clarity-angular";
 import {HttpModule} from "@angular/http";
 import {AppService} from "./app.service";
+import * as ol from 'openlayers';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {AppService} from "./app.service";
     AppRoutingModule,
     ClarityModule.forRoot(),
     BrowserAnimationsModule,
-    AngularOpenlayersModule
+    AngularOpenlayersModule,
   ],
   providers: [
     AppService
